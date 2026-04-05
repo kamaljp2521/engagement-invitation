@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Somasundaram & Bharathi | Engagement Invitation</title>
+  <style>
+    :root {
+      --gold: #d8b15a;
+      --gold-soft: #f3dfb2;
+      --bg-dark: #090704;
+      --text: #fff8ea;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    body.intro-lock {
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .tap-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at center, rgba(221, 179, 83, 0.16) 0%, rgba(8, 5, 2, 0.94) 42%, #000 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.75));
+      text-align: center;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+
+    .tap-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .tap-card {
+      max-width: 560px;
+      width: 100%;
+      border: 1px solid rgba(239, 199, 112, 0.32);
+      border-radius: 28px;
+      padding: 28px 22px;
+      background: rgba(22, 15, 7, 0.52);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+    }
+
+    .tap-title {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: #f6d58b;
+      margin-bottom: 10px;
+      text-shadow: 0 0 18px rgba(216, 177, 90, 0.2);
+    }
+
+    .tap-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #f7edcf;
+      margin-bottom: 22px;
+    }
+
+    .tap-btn {
+      appearance: none;
+      border: 1px solid rgba(239, 199, 112, 0.8);
+      background: linear-gradient(180deg, rgba(216,177,90,0.34), rgba(216,177,90,0.16));
+      color: #fff8ea;
+      border-radius: 999px;
+      padding: 14px 30px;
+      font-size: 1rem;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(216,177,90,0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      min-width: 220px;
+    }
+
+    .tap-btn:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 28px rgba(216,177,90,0.28);
+    }
+
+    .tap-note {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: rgba(255, 244, 220, 0.78);
+    }
+
+    .intro {
+      pointer-events: auto;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at center, rgba(221, 179, 83, 0.22) 0%, rgba(15, 9, 3, 0.96) 38%, #000 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+      overflow: hidden;
+      transition: opacity 1.2s ease, visibility 1.2s ease;
+    }
+
+    .intro.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .glow {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 219, 141, 0.42), rgba(255, 208, 107, 0.08), transparent 68%);
+      filter: blur(10px);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .film-grain,
+    .particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .film-grain {
+      opacity: 0.08;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.7) 0.5px, transparent 0.7px),
+        radial-gradient(circle at 70% 40%, rgba(255,255,255,0.6) 0.5px, transparent 0.7px),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.5) 0.5px, transparent 0.7px);
+      background-size: 120px 120px;
+      mix-blend-mode: screen;
+    }
+
+    .particles span {
+      position: absolute;
+      display: block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 220, 150, 0.9);
+      box-shadow: 0 0 10px rgba(255, 220, 150, 0.7);
+      animation: floatUp linear infinite;
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 5;
+      max-width: 920px;
+      pointer-events: auto;
+    }
+
+    .cinema-line {
+      opacity: 0;
+      transform: translateY(26px);
+      animation: fadeUp 1.6s ease forwards;
+    }
+
+    .eyebrow {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      animation-delay: 0.6s;
+    }
+
+    .headline {
+      margin-top: 18px;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 1.1;
+      color: #f6d58b;
+      text-shadow: 0 0 24px rgba(216, 177, 90, 0.28);
+      animation-delay: 2s;
+    }
+
+    .subhead {
+      margin-top: 18px;
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      line-height: 1.8;
+      color: #f7edcf;
+      animation-delay: 3.8s;
+    }
+
+    .detail-line {
+      margin-top: 22px;
+      font-size: clamp(0.95rem, 2vw, 1.08rem);
+      line-height: 1.95;
+      color: #ecd8a8;
+      animation-delay: 5.4s;
+    }
+
+    .enter-wrap {
+      margin-top: 34px;
+      opacity: 0;
+      transform: translateY(26px);
+      animation: fadeUp 1.6s ease forwards;
+      animation-delay: 7.1s;
+    }
+
+    .enter-btn {
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
+      appearance: none;
+      border: 1px solid rgba(239, 199, 112, 0.8);
+      background: linear-gradient(180deg, rgba(216,177,90,0.28), rgba(216,177,90,0.14));
+      color: #fff8ea;
+      border-radius: 999px;
+      padding: 14px 30px;
+      font-size: 1rem;
+      letter-spacing: 0.8px;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(216,177,90,0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 0 28px rgba(216,177,90,0.28);
+      background: linear-gradient(180deg, rgba(216,177,90,0.36), rgba(216,177,90,0.18));
+    }
+
+    .skip-note {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: rgba(255, 244, 220, 0.78);
+    }
+
+    .main {
+      position: relative;
+      z-index: 1;
+      min-height: 100dvh;
+      height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top, rgba(216,177,90,0.09), transparent 35%),
+        linear-gradient(180deg, #120d07 0%, #0b0805 100%);
+    }
+
+    .invitation-frame {
+      width: min(100%, 1100px);
+      height: 100dvh;
+      text-align: center;
+      animation: revealMain 1.4s ease both;
+      display: none;
+      padding: 10px 0;
+      grid-template-rows: 1fr auto auto;
+      align-items: center;
+      justify-items: center;
+      gap: 10px;
+    }
+
+    .invitation-frame.show {
+      display: grid;
+    }
+
+    .hidden-audio {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .invite-card {
+      width: 100%;
+      max-width: 100%;
+      height: min(78dvh, 900px);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(240, 207, 137, 0.2);
+      background: rgba(255,255,255,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .invite-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      transform-origin: center center;
+      will-change: transform, filter;
+    }
+
+    /* Zoom sequence to focus venue then zoom out */
+    .zoom-sequence {
+      animation: zoomFocusDesktop var(--zoom-duration, 28s) linear forwards;
+    }
+
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 0;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .action-bar a,
+    .action-bar button {
+      text-decoration: none;
+      border: 1px solid rgba(239, 199, 112, 0.6);
+      background: rgba(216,177,90,0.12);
+      color: #fff8ea;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .note {
+      margin-top: 0;
+      color: rgba(255, 243, 215, 0.78);
+      font-size: 0.84rem;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.12); opacity: 0.55; }
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.7); opacity: 0; }
+      10% { opacity: 0.85; }
+      100% { transform: translateY(-10vh) scale(1.3); opacity: 0; }
+    }
+
+    @keyframes revealMain {
+      from { opacity: 0; transform: translateY(20px) scale(0.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes zoomFocusDesktop {
+      0% {
+        transform: translateY(100%) scale(3);
+      }
+      10% {
+        transform: translateY(100%) scale(3);
+      }
+      28% {
+        transform: translateY(72%) scale(3);
+      }
+      48% {
+        transform: translateY(44%) scale(3);
+      }
+      68% {
+        transform: translateY(16%) scale(3);
+      }
+      84% {
+        transform: translateY(-12%) scale(3);
+      }
+      94% {
+        transform: translateY(-40%) scale(3);
+      }
+      98.8% {
+        transform: translateY(-40%) scale(3);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes zoomFocusMobile {
+      0% {
+        transform: translateY(52%) scale(1.75);
+      }
+      10% {
+        transform: translateY(52%) scale(1.75);
+      }
+      30% {
+        transform: translateY(34%) scale(1.75);
+      }
+      50% {
+        transform: translateY(14%) scale(1.75);
+      }
+      70% {
+        transform: translateY(-6%) scale(1.75);
+      }
+      88% {
+        transform: translateY(-24%) scale(1.75);
+      }
+      97% {
+        transform: translateY(-24%) scale(1.75);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .zoom-sequence {
+        animation: zoomFocusMobile var(--zoom-duration, 28s) linear forwards;
+      }
+
+      .tap-card {
+        padding: 24px 18px;
+        border-radius: 22px;
+      }
+
+      .tap-text {
+        font-size: 0.95rem;
+      }
+
+      .tap-btn {
+        width: 100%;
+      }
+
+      .intro { padding: 18px; }
+      .headline { font-size: clamp(2rem, 9vw, 3.5rem); }
+      .invitation-frame {
+        padding: 8px 0;
+        gap: 8px;
+      }
+      .invite-card {
+        height: min(72dvh, 620px);
+        border-radius: 18px;
+      }
+      .action-bar {
+        gap: 8px;
+      }
+      .action-bar a, .action-bar button {
+        width: calc(50% - 4px);
+        padding: 10px 8px;
+        font-size: 0.86rem;
+      }
+      .note {
+        font-size: 0.78rem;
+        padding: 0 8px;
+      }
+    }
+  </style>
+</head>
+<body class="intro-lock">
+  <div class="tap-overlay" id="tapOverlay">
+    <div class="tap-card">
+      <div class="tap-title">Samasundaram &amp; Bharathi</div>
+      <div class="tap-text">Tap once to begin the cinematic invitation with music.</div>
+      <button type="button" class="tap-btn" id="startOverlayBtn">Tap to Enter</button>
+      <div class="tap-note">Best viewed with sound on</div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" class="hidden-audio" preload="auto" playsinline>
+    <source src="Music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <section class="intro" id="introScreen" aria-label="Cinematic intro">
+    <div class="glow"></div>
+    <div class="film-grain"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="intro-content">
+      <div class="cinema-line eyebrow">A joyful beginning</div>
+      <div class="cinema-line headline">Samasundaram<br>&amp;<br>Bharathi</div>
+      <div class="cinema-line subhead">
+        With the blessings of our families,<br>
+        we warmly invite you to our Engagement Ceremony.
+      </div>
+      <div class="cinema-line detail-line">
+        Monday, April 20, 2026 · 6:00 PM<br>
+        Hotel Sangeetha, #19 Jawaharlal Nehru Road,<br>
+        (100 ft Road), Koyambedu, Chennai
+      </div>
+      <div class="enter-wrap">
+        <button type="button" class="enter-btn" id="enterBtn">Open Invitation</button>
+        <div class="skip-note">Cinematic intro will continue after you enter</div>
+        <div class="skip-note" id="audioStatus" style="display:none; color:#ffd8a8;">Music could not be loaded. Make sure <strong>Music.mp3</strong> is in the same folder as <strong>index.html</strong>.</div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main">
+    <section class="invitation-frame" id="mainInvitation">
+      <div class="invite-card">
+        <img src="Invitation.png" alt="Engagement invitation for Samasundaram and Bharathi" />
+      </div>
+      <div class="action-bar">
+        <a href="https://maps.google.com/?q=Hotel%20Sangeetha%20Koyambedu%20Chennai" target="_blank" rel="noopener noreferrer">Directions</a>
+        <a href="tel:+910000000000">Call RSVP</a>
+        <a href="https://wa.me/910000000000" target="_blank" rel="noopener noreferrer">WhatsApp RSVP</a>
+        <button id="toggleMusic">Pause Music</button>
+      </div>
+      <div class="note">Update the RSVP phone number in the code before sharing.</div>
+    </section>
+  </main>
+
+  <script>
+    const particles = document.getElementById('particles');
+    const tapOverlay = document.getElementById('tapOverlay');
+    const startOverlayBtn = document.getElementById('startOverlayBtn');
+    const introScreen = document.getElementById('introScreen');
+    const mainInvitation = document.getElementById('mainInvitation');
+    const bgMusic = document.getElementById('bgMusic');
+    const enterBtn = document.getElementById('enterBtn');
+    const toggleMusic = document.getElementById('toggleMusic');
+    const audioStatus = document.getElementById('audioStatus');
+    let introActivated = false;
+    let experienceStarted = false;
+    let musicStarted = false;
+    let fadeInterval = null;
+    let originalVolume = 1;
+    let zoomDurationSeconds = 28;
+    let endFadeSeconds = 0.3;
+
+    for (let i = 0; i < 42; i++) {
+      const dot = document.createElement('span');
+      dot.style.left = `${Math.random() * 100}vw`;
+      dot.style.animationDuration = `${6 + Math.random() * 7}s`;
+      dot.style.animationDelay = `${Math.random() * 8}s`;
+      dot.style.width = dot.style.height = `${2 + Math.random() * 3}px`;
+      particles.appendChild(dot);
+    }
+
+    function showAudioError() {
+      audioStatus.style.display = 'block';
+    }
+
+    function clearFadeInterval() {
+      if (fadeInterval) {
+        clearInterval(fadeInterval);
+        fadeInterval = null;
+      }
+    }
+
+    function syncZoomToMusic() {
+      if (!bgMusic.duration || !isFinite(bgMusic.duration)) {
+        document.documentElement.style.setProperty('--zoom-duration', `${zoomDurationSeconds}s`);
+        return;
+      }
+
+      const safeDuration = Math.max(12, bgMusic.duration);
+      zoomDurationSeconds = safeDuration;
+      document.documentElement.style.setProperty('--zoom-duration', `${safeDuration}s`);
+    }
+
+    function getRemainingMusicTime() {
+      if (!bgMusic.duration || !isFinite(bgMusic.duration)) {
+        return zoomDurationSeconds;
+      }
+      return Math.max(6, bgMusic.duration - bgMusic.currentTime);
+    }
+
+    function syncZoomToRemainingMusic() {
+      const remaining = getRemainingMusicTime();
+      document.documentElement.style.setProperty('--zoom-duration', `${remaining}s`);
+      return remaining;
+    }
+
+    function startFadeOutIfNeeded() {
+      clearFadeInterval();
+
+      const remaining = bgMusic.duration - bgMusic.currentTime;
+      const fadeSeconds = Math.min(endFadeSeconds, Math.max(0.25, remaining * 0.02));
+
+      if (!isFinite(remaining) || remaining <= fadeSeconds || fadeSeconds <= 0) {
+        return;
+      }
+
+      const fadeStartTime = bgMusic.duration - fadeSeconds;
+
+      const tick = () => {
+        if (bgMusic.paused) return;
+
+        if (bgMusic.currentTime >= fadeStartTime) {
+          const progress = (bgMusic.currentTime - fadeStartTime) / fadeSeconds;
+          const nextVolume = Math.max(0, originalVolume * (1 - progress));
+          bgMusic.volume = nextVolume;
+        }
+
+        if (bgMusic.ended || bgMusic.currentTime >= bgMusic.duration) {
+          clearFadeInterval();
+        }
+      };
+
+      fadeInterval = setInterval(tick, 120);
+    }
+
+    function prepareMusicPlayback() {
+      clearFadeInterval();
+      bgMusic.volume = originalVolume;
+      syncZoomToMusic();
+      startFadeOutIfNeeded();
+    }
+
+    function prepareMusicForInvitationAnimation() {
+      clearFadeInterval();
+      bgMusic.volume = originalVolume;
+      const remaining = syncZoomToRemainingMusic();
+      endFadeSeconds = 0.3;
+      startFadeOutIfNeeded();
+      return remaining;
+    }
+
+    function activateIntro() {
+      if (introActivated) return;
+      introActivated = true;
+
+      tapOverlay.classList.add('hidden');
+
+      setTimeout(() => {
+        tapOverlay.style.display = 'none';
+      }, 700);
+
+      bgMusic.play().then(() => {
+        musicStarted = true;
+        bgMusic.volume = originalVolume;
+        toggleMusic.textContent = 'Pause Music';
+        bgMusic.onended = () => {
+          clearFadeInterval();
+          bgMusic.volume = originalVolume;
+          toggleMusic.textContent = 'Play Music';
+        };
+      }).catch(() => {
+        showAudioError();
+      });
+    }
+
+    function showInvitation() {
+      introScreen.classList.add('hidden');
+      setTimeout(() => {
+        introScreen.style.display = 'none';
+        mainInvitation.classList.add('show');
+        document.body.classList.remove('intro-lock');
+        document.body.style.overflow = 'hidden';
+
+        // Make the zoom use exactly the music time left right now
+        const remainingMusic = prepareMusicForInvitationAnimation();
+        document.documentElement.style.setProperty('--zoom-duration', `${remainingMusic}s`);
+
+        // Trigger movie-style top-to-bottom pan on invitation image
+        const img = document.querySelector('.invite-card img');
+        if (img) {
+          img.style.objectPosition = 'center center';
+          img.classList.remove('zoom-sequence');
+          void img.offsetWidth;
+          img.classList.add('zoom-sequence');
+        }
+      }, 900);
+    }
+
+    bgMusic.addEventListener('error', showAudioError);
+    bgMusic.addEventListener('loadedmetadata', syncZoomToMusic);
+
+    async function startExperience() {
+      if (experienceStarted) return;
+      experienceStarted = true;
+
+      enterBtn.disabled = true;
+      enterBtn.textContent = 'Opening...';
+
+      try {
+        if (!musicStarted) {
+          bgMusic.currentTime = 0;
+          await bgMusic.play();
+          musicStarted = true;
+        }
+        prepareMusicPlayback();
+        toggleMusic.textContent = 'Pause Music';
+        bgMusic.onended = () => {
+          clearFadeInterval();
+          bgMusic.volume = originalVolume;
+          toggleMusic.textContent = 'Play Music';
+        };
+      } catch (e) {
+        showAudioError();
+      }
+
+      showInvitation();
+    }
+
+    startOverlayBtn.addEventListener('click', activateIntro);
+    startOverlayBtn.addEventListener('touchstart', activateIntro, { passive: true });
+
+    enterBtn.addEventListener('click', startExperience);
+    enterBtn.addEventListener('touchstart', startExperience, { passive: true });
+
+    toggleMusic.addEventListener('click', async () => {
+      if (bgMusic.paused) {
+        try {
+          if (bgMusic.ended || bgMusic.currentTime >= bgMusic.duration - 0.1) {
+            bgMusic.currentTime = 0;
+          }
+          await bgMusic.play();
+          musicStarted = true;
+          prepareMusicPlayback();
+          toggleMusic.textContent = 'Pause Music';
+          bgMusic.onended = () => {
+            clearFadeInterval();
+            bgMusic.volume = originalVolume;
+            toggleMusic.textContent = 'Play Music';
+          };
+        } catch (e) {
+          showAudioError();
+        }
+      } else {
+        clearFadeInterval();
+        bgMusic.pause();
+        bgMusic.volume = originalVolume;
+        toggleMusic.textContent = 'Play Music';
+      }
+    });
+  </script>
+</body>
+</html>
